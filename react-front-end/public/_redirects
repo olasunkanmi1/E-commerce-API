@@ -1,0 +1,4 @@
+to set up proxy on netlify. instaed of looking for the server where the frontend is hosted on, we are looking for the server running on heroku
+/api/*  https://user-workflow-11.herokuapp.com/api/:splat  200
+
+/* /index.html 200
