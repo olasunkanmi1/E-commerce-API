@@ -16,7 +16,8 @@ const getAllProducts = async (req, res) => {
 const getSingleProduct = async (req, res) => {
   const { id: productId } = req.params;
 
-  const product = await Product.findOne({ _id: productId }).populate('reviews');
+  const product = await Product.findOne({ _id: productId })
+  // .populate('reviews');
 
   if (!product) {
     throw new CustomError.NotFoundError(`No product with id : ${productId}`);
@@ -50,6 +51,8 @@ const deleteProduct = async (req, res) => {
   await product.remove();
   res.status(StatusCodes.OK).json({ msg: 'Success! Product removed.' });
 };
+
+// local upload
 const uploadImage = async (req, res) => {
   if (!req.files) {
     throw new CustomError.BadRequestError('No File Uploaded');
