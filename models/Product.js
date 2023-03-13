@@ -67,16 +67,21 @@ const ProductSchema = new mongoose.Schema(
       required: true,
     },
   },
-  { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
+  { timestamps: true, 
+    toJSON: { virtuals: true }, 
+    toObject: { virtuals: true } 
+  }
 );
-
+// to show reviews for the particular product. alternative method used in this product. we created a separate api for it instead of virtual
 ProductSchema.virtual('reviews', {
   ref: 'Review',
   localField: '_id',
   foreignField: 'product',
   justOne: false,
+  // match: { rating: 5 } //only review with 5 rating
 });
 
+// delete all reviews associated with a product when the product is deleted
 ProductSchema.pre('remove', async function (next) {
   await this.model('Review').deleteMany({ product: this._id });
 });
