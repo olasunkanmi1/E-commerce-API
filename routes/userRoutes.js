@@ -14,7 +14,7 @@ const {
 
 router
   .route('/')
-  .get(authenticateUser, authorizePermissions('admin'), getAllUsers);
+  .get(authenticateUser, authorizePermissions('admin'), getAllUsers); //authenticate user before authorizing admin so we can access req.user first to get role
 
   // /showme, /updateuser and /updateuserpassword should be above so it wont be treated as a params like /:id
 router.route('/showMe').get(authenticateUser, showCurrentUser);

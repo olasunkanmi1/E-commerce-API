@@ -4,7 +4,7 @@ const CustomError = require('../errors');
 const {
   createTokenUser,
   attachCookiesToResponse,
-//   checkPermissions,
+  checkPermissions,
 } = require('../utils');
 
 const getAllUsers = async (req, res) => {
@@ -18,14 +18,15 @@ const getSingleUser = async (req, res) => {
   if (!user) {
     throw new CustomError.NotFoundError(`No user with id : ${req.params.id}`);
   }
-//   checkPermissions(req.user, user._id);
+  checkPermissions(req.user, user._id);
   res.status(StatusCodes.OK).json({ user });
 };
 
+// useful to check if there is a user. maybe anytime page is been refreshed to know if token is still present, valid or expired
 const showCurrentUser = async (req, res) => {
   res.status(StatusCodes.OK).json({ user: req.user });
 };
-// update user with user.save()
+// update user with user.save() --using user.save affects password, check if its not modified in pre save in user model
 const updateUser = async (req, res) => {
   const { email, name } = req.body;
   if (!email || !name) {
